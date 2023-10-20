@@ -53,19 +53,19 @@ int doUResWrite(int argc, char *argv[]) {
 	if(argc == 3) {
 		u8 val = atoi(argv[2]);
 		if(val >= (1 << U5_IN_CH_NO)) {
-			printf("Mask value out of range[0..%d]\n", (1 << U5_IN_CH_NO )- 1);
+			printf("Mask value out of range[0..%d]!\n", (1 << U5_IN_CH_NO )- 1);
 			return ARG_RANGE_ERR;
 		}
 		u8 buf[1];
 		memcpy(buf, &val, 1);
 		if(OK != i2cMem8Write(dev, I2C_MEM_SELECT_VAL, buf, 1)) {
-			printf("Fail to select resolution for channels\n");
+			printf("Fail to select resolution for channels!\n");
 			return ERR;
 		}
 	} else if(argc == 4) {
 		u8 ch = atoi(argv[2]);
 		if(!(1 <= ch && ch <= U5_IN_CH_NO)) {
-			printf("Channel number out of range\n");
+			printf("Channel number out of range!\n");
 			return ARG_RANGE_ERR;
 		}
 		u8 val = atoi(argv[3]);
@@ -76,12 +76,12 @@ int doUResWrite(int argc, char *argv[]) {
 		} else if(val == 1) {
 			MEM = I2C_MEM_SELECT_30MV;
 		} else {
-			printf("Invalid value[0 or 1]\n");
+			printf("Invalid value[0 or 1]!\n");
 			return ARG_RANGE_ERR;
 		}
 		buf[0] = ch;
 		if(OK != i2cMem8Write(dev, MEM, buf, sizeof(ch))) {
-			printf("Fail to select resolution for channel %d", ch);
+			printf("Fail to select resolution for channel %d!\n", ch);
 			return ERR;
 		}
 	}
@@ -106,13 +106,13 @@ int doU5InRead(int argc, char *argv[]) {
 	}
 	int ch = atoi(argv[2]);
 	if(!(1 <= ch && ch <= U5_IN_CH_NO)) {
-		printf("0-5V channel out of range[1..%d]", U5_IN_CH_NO);
+		printf("0-5V channel out of range[1..%d]!\n", U5_IN_CH_NO);
 		return ARG_CNT_ERR;
 	}
 	u16 val;
 	u8 buf[sizeof(val)];
 	if(OK != i2cMem8Read(dev, I2C_MEM_U5V_IN1 + (ch - 1) * sizeof(val), buf, sizeof(val))) {
-		printf("Fail to read 0-5V input channel voltage\n");
+		printf("Fail to read 0-5V input channel voltage!\n");
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
@@ -172,13 +172,13 @@ int doU30MInRead(int argc, char *argv[]) {
 	}
 	int ch = atoi(argv[2]);
 	if(!(1 <= ch && ch <= U30M_IN_CH_NO)) {
-		printf("0-30mV channel out of range[1..%d]", U30M_IN_CH_NO);
+		printf("0-30mV channel out of range[1..%d]!\n", U30M_IN_CH_NO);
 		return ARG_CNT_ERR;
 	}
 	u16 val;
 	u8 buf[sizeof(val)];
 	if(OK != i2cMem8Read(dev, I2C_MEM_U30MV_IN1 + (ch - 1) * sizeof(val), buf, sizeof(val))) {
-		printf("Fail to read 0-30mV input channel voltage\n");
+		printf("Fail to read 0-30mV input channel voltage!\n");
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
@@ -243,7 +243,7 @@ int doIInRead(int argc, char *argv[]) {
 	u16 val;
 	u8 buf[sizeof(val)];
 	if(OK != i2cMem8Read(dev, I2C_MEM_I4_20MA_IN1 + (ch - 1) * sizeof(val), buf, sizeof(val))) {
-		printf("Fail to read 4-20mA input channel amperage\n");
+		printf("Fail to read 4-20mA input channel!\n");
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));

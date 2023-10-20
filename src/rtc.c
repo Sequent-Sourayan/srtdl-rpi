@@ -98,6 +98,7 @@ int doRTCSet(int argc, char *argv[]) {
 		printf("Fail to write RTC!\n");
 		return ERR;
 	}
+
 	printf("done\n");
 	return OK;
 }

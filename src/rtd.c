@@ -32,7 +32,7 @@ int doRtdTempRead(int argc, char *argv[]) {
         }
         uint8_t buf[4];
         if(OK != i2cMem8Read(dev, I2C_MEM_RTD_TEMP1 + RTD_TEMP_DATA_SIZE * (ch - 1), buf, RTD_TEMP_DATA_SIZE)) {
-		printf("Failed to read rtd temperature");
+		printf("Failed to read rtd temperature!\n");
 		return ERR;
         }
         float val;
@@ -64,7 +64,7 @@ int doRtdResRead(int argc, char *argv[]) {
         }
         uint8_t buf[4];
         if(OK != i2cMem8Read(dev, I2C_MEM_RTD_RES1 + RTD_RES_DATA_SIZE * (ch - 1), buf, RTD_RES_DATA_SIZE)) {
-		printf("Failed to read rtd resistance");
+		printf("Failed to read rtd resistance!\n");
 		return ERR;
         }
         float val;
@@ -96,14 +96,14 @@ int doRtdResCal(int argc, char *argv[]) {
         }
 	if(strcasecmp(argv[3], "reset") == 0) {
 		if(OK != calibReset(dev, CAL_CH_RTD_RES_IN1 + (ch - 1))) {
-			printf("Failed to reset calibration");
+			printf("Failed to reset calibration!\n");
 			return ERR;
 		}
 		return OK;
 	}
 	float val = atof(argv[3]);
 	if(OK != calibSet(dev, CAL_CH_RTD_RES_IN1 + (ch - 1), val)) {
-		printf("Failed to read rtd resistance");
+		printf("Failed to calibrate rtd resistance!\n");
 		return ERR;
         }
         return OK;

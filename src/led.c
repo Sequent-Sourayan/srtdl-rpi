@@ -45,7 +45,7 @@ int doLedRead(int argc, char *argv[]) {
 		}
 		int led = atoi(argv[2]);
                 if(!(1 <= led && led <= LED_CH_NO)) {
-			printf("Led number out of range");
+			printf("Led number out of range!\n");
                         return ARG_RANGE_ERR;
                 }
 		if(buf[0] & (1 << (led - 1))) {
@@ -64,7 +64,7 @@ const CliCmdType CMD_LED_WRITE = {
         "  ledwr            Set the state of general purpose LEDS on the card\n",
         "  Usage 1:         "PROGRAM_NAME" ledwr <led[1.."STR(LED_CH_NO)"]> <state(0/1)>\n"
         "  Usage 2:         "PROGRAM_NAME" ledwr <mask[0.."STR(MASK(LED_CH_NO))"]>\n",
-        "  Example:         "PROGRAM_NAME" ledwr 2 1  Turn ON the LED #2 on board #0\n"
+        "  Example:         "PROGRAM_NAME" ledwr 2 1  Turn ON the LED #2\n"
 };
 int doLedWrite(int argc, char *argv[]) {
         if(!(argc == 3 || argc == 4)) {
@@ -89,10 +89,10 @@ int doLedWrite(int argc, char *argv[]) {
         else if(argc == 4) {
                 int led = atoi(argv[2]);
                 if(!(1 <= led && led <= LED_CH_NO)) {
-			printf("Led number out of range");
+			printf("Led number out of range!\n");
                         return ARG_RANGE_ERR;
                 }
-                int state = atoi(argv[4]);
+                int state = atoi(argv[3]);
                 uint8_t buf[1];
                 buf[0] = 0xff & led;
                 if(state > 0) {
