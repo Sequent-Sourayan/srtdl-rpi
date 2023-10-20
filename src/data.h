@@ -6,7 +6,11 @@
 #define PROGRAM_NAME "srtdl"
 #define CARD_NAME "strdl"
 #define VERSION "1.0.0"
-#define SLAVE_OWN_ADDRESS_BASE 0x50
+#define SLAVE_OWN_ADDRESS_BASE 0x51
+
+#define MV_TO_V ((float)0.001)
+#define UV_TO_MV MV_TO_V
+#define UA_TO_MA MV_TO_V
 
 #define UI_VAL_SIZE 2
 #define RTD_VAL_SIZE 4

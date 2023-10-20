@@ -16,6 +16,7 @@ int calibSet(int dev, int channel, float value) {
 		CALIBRATION_KEY,
 	};
 	memcpy(buf, &value, 4);
+  buf[4] =  0xff & channel;
 	if(OK != i2cMem8Write(dev, I2C_MEM_CALIB_VALUE, buf, 6)) {
 		printf("Failed to write calibration\n");
 		return ERR;

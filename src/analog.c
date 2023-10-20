@@ -37,10 +37,10 @@ const CliCmdType CMD_U_RES_WRITE = {/*{{{*/
 	"ureswr",
 	1,
 	&doUResWrite,
-	"  iinrd            Select resolution for voltage input\n",
-	"  Usage 1:         "PROGRAM_NAME" iinrd <channel> <(0 0..5V/1 0..30mV)>\n"
-	"  Usage 2:         "PROGRAM_NAME" iinrd <mask[1.."STR(MASK(U5_IN_CH_NO))">\n",
-	"  Example:         "PROGRAM_NAME" iinrd 2 1 #Select 0..30mV for channel #2\n",
+	"  ureswr            Select resolution for voltage input\n",
+	"  Usage 1:         "PROGRAM_NAME" ureswr <channel> <(0 0..5V/1 0..30mV)>\n"
+	"  Usage 2:         "PROGRAM_NAME" ureswr <mask[1.."STR(MASK(U5_IN_CH_NO))">\n",
+	"  Example:         "PROGRAM_NAME" ureswr 2 1 #Select 0..30mV for channel #2\n",
 };
 int doUResWrite(int argc, char *argv[]) {
 	if(argc != 3 && argc != 4) {
@@ -51,9 +51,9 @@ int doUResWrite(int argc, char *argv[]) {
 		return ERR;
 	}
 	if(argc == 3) {
-		int val = atoi(argv[2]);
-		if(!(0 <= val && val <= (1 << (U5_IN_CH_NO - 1)))) {
-			printf("Mask value out of range[1..%d]", 1 << U5_IN_CH_NO);
+		u8 val = atoi(argv[2]);
+		if(val >= (1 << U5_IN_CH_NO)) {
+			printf("Mask value out of range[0..%d]\n", (1 << U5_IN_CH_NO )- 1);
 			return ARG_RANGE_ERR;
 		}
 		u8 buf[1];
@@ -79,6 +79,7 @@ int doUResWrite(int argc, char *argv[]) {
 			printf("Invalid value[0 or 1]\n");
 			return ARG_RANGE_ERR;
 		}
+		buf[0] = ch;
 		if(OK != i2cMem8Write(dev, MEM, buf, sizeof(ch))) {
 			printf("Fail to select resolution for channel %d", ch);
 			return ERR;
@@ -116,7 +117,7 @@ int doU5InRead(int argc, char *argv[]) {
 	}
 	memcpy(&val, buf, sizeof(val));
 	float fval = (float)val / 1000;
-	printf("%.3f", fval);
+	printf("%.3f\n", fval);
 	return OK;
 }/*}}}*/
 const CliCmdType CMD_U5_IN_CAL = {/*{{{*/
@@ -157,9 +158,9 @@ const CliCmdType CMD_U30M_IN_READ = {/*{{{*/
 	"u30inrd",
 	1,
 	&doU30MInRead,
-	"  u5inrd           Read 0-30mV input voltage value(mV)\n",
-	"  Usage:           "PROGRAM_NAME" u5inrd <channel>\n",
-	"  Example:         "PROGRAM_NAME" u5inrd 2 #Read voltage on 0-30mV input channel #2\n",
+	"  u30inrd           Read 0-30mV input voltage value(mV)\n",
+	"  Usage:           "PROGRAM_NAME" u30inrd <channel>\n",
+	"  Example:         "PROGRAM_NAME" u30inrd 2 #Read voltage on 0-30mV input channel #2\n",
 };
 int doU30MInRead(int argc, char *argv[]) {
 	if(argc != 3) {
@@ -182,7 +183,7 @@ int doU30MInRead(int argc, char *argv[]) {
 	}
 	memcpy(&val, buf, sizeof(val));
 	float fval = (float)val / 1000;
-	printf("%.3f", fval);
+	printf("%.3f\n", fval);
 	return OK;
 }/*}}}*/
 const CliCmdType CMD_U30M_IN_CAL = {/*{{{*/
@@ -223,9 +224,9 @@ const CliCmdType CMD_I_IN_READ = {/*{{{*/
 	"iinrd",
 	1,
 	&doIInRead,
-	"  iinrd            Read 4-20mA input amperage value(mA)\n",
+	"  iinrd            Read 4-20mA input current value(mA)\n",
 	"  Usage:           "PROGRAM_NAME" iinrd <channel>\n",
-	"  Example:         "PROGRAM_NAME" iinrd 2 #Read amperage on 4-20mA input channel #2 on board #0\n",
+	"  Example:         "PROGRAM_NAME" iinrd 2 #Read current on 4-20mA input channel #2 on board #0\n",
 };
 int doIInRead(int argc, char *argv[]) {
 	if(argc != 3) {

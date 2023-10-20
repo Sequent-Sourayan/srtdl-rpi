@@ -32,7 +32,7 @@ int doWindDirRead(int argc, char *argv[]) {
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
-	printf("%d", val);
+	printf("%0.3f\n", val * MV_TO_V);
 	return OK;
 }
 
@@ -91,7 +91,7 @@ int doWindSpeedRead(int argc, char *argv[]) {
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
-	printf("%d", val);
+	printf("%d\n", val);
 	return OK;
 }
 
@@ -123,8 +123,8 @@ int doPanelVoltRead(int argc, char *argv[]) {
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
-	float fval = (float)val / 1000;
-	printf("%.3f", fval);
+	float fval = (float)val * MV_TO_V;
+	printf("%.3f\n", fval);
 	return OK;
 }
 
@@ -189,7 +189,7 @@ int doPanelCrtRead(int argc, char *argv[]) {
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
-	printf("%d", val);
+	printf("%0.3f\n", val * MV_TO_V);
 	return OK;
 }
 
@@ -218,7 +218,7 @@ int doFanPwrRead(int argc, char *argv[]) {
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
-	printf("%d", val);
+	printf("%d\n", val);
 	return OK;
 }
 
@@ -239,9 +239,9 @@ int doFanPwrWrite(int argc, char *argv[]) {
 		return ERR;
 	}
 	int ch = 1;
-	u8 val = atoi(argv[2]);
-	if(!(1 <= val && val <= 100)) {
-		printf("Value out of range[0..100]");
+	u8 val = (u8)atoi(argv[2]);
+	if(!(val <= 100)) {
+		printf("Value out of range[0..100]\n");
 		return ARG_CNT_ERR;
 	}
 	u8 buf[sizeof(val)];
@@ -257,7 +257,7 @@ const CliCmdType CMD_PRESSURE_READ = {
 	"presrd",
 	1,
 	&doPressureRead,
-	"  pressrd          Read internal sensor pressure(milibars)\n",
+	"  presrd           Read internal sensor pressure(milibars)\n",
 	"  Usage:           "PROGRAM_NAME" pressrd\n",
 	"  Example:         "PROGRAM_NAME" pressrd\n",
 };
@@ -278,7 +278,7 @@ int doPressureRead(int argc, char *argv[]) {
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
-	printf("%f", val);
+	printf("%f Pa\n", val);
 	return OK;
 }
 
@@ -307,6 +307,6 @@ int doTempRead(int argc, char *argv[]) {
 		return ERR;
 	}
 	memcpy(&val, buf, sizeof(val));
-	printf("%f", val);
+	printf("%f C\n", val);
 	return OK;
 }
