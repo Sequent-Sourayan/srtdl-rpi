@@ -7,6 +7,76 @@
 #include "data.h"
 #include "misc.h"
 
+
+const CliCmdType CMD_RAIN_COUNT_READ =
+{
+	"rcrd",
+	1,
+	&doRainCountRead,
+	"  rcrd           Read rain sensor counter\n",
+	"  Usage:           "PROGRAM_NAME" rcrd\n",
+	"  Example:         "PROGRAM_NAME" rcrd\n",
+};
+int doRainCountRead(int argc, char *argv[])
+{
+	(void)argv;
+	if (argc != 2)
+	{
+		return ARG_CNT_ERR;
+	}
+	int dev = doBoardInit(0);
+	if (dev < 0)
+	{
+		return ERR;
+	}
+	u32 val;
+	u8 buf[sizeof (val)];
+	if (OK
+		!= i2cMem8Read(dev, I2C_MEM_RAIN_COUNT, buf,
+			sizeof (val)))
+	{
+		printf("Fail to read rain sensor counter\n");
+		return ERR;
+	}
+	memcpy(&val, buf, sizeof (val));
+	printf("%d\n", val);
+	return OK;
+}
+
+const CliCmdType CMD_RAIN_COUNT_RESET =
+{
+	"rcrst",
+	1,
+	&doRainCountReset,
+	"  rcrst           Reset the  rain sensor counter\n",
+	"  Usage:           "PROGRAM_NAME" rcrst\n",
+	"  Example:         "PROGRAM_NAME" rcrst\n",
+};
+int doRainCountReset(int argc, char *argv[])
+{
+	(void)argv;
+	if (argc != 2)
+	{
+		return ARG_CNT_ERR;
+	}
+	int dev = doBoardInit(0);
+	if (dev < 0)
+	{
+		return ERR;
+	}
+	
+	u8 buf[1];
+	buf[0] = RESET_CALIBRATION_KEY;
+	if (OK
+		!= i2cMem8Write(dev, I2C_MEM_RAIN_COUNT_RESET, buf, 1))
+	{
+		printf("Fail to reset rain sensor counter\n");
+		return ERR;
+	}
+	
+	printf("OK\n");
+	return OK;
+}
 const CliCmdType CMD_WIND_DIR_READ =
 {
 	"wdirrd",

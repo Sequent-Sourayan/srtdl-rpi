@@ -2,7 +2,8 @@
 #define MISC_H
 
 #include "cli.h"
-
+extern const CliCmdType CMD_RAIN_COUNT_READ;
+extern const CliCmdType CMD_RAIN_COUNT_RESET;
 extern const CliCmdType CMD_WIND_DIR_READ;
 extern const CliCmdType CMD_WIND_DIR_CAL;
 extern const CliCmdType CMD_WIND_SPEED_READ;
@@ -15,6 +16,8 @@ extern const CliCmdType CMD_PRESSURE_READ;
 extern const CliCmdType CMD_TEMP_READ;
 extern const CliCmdType CMD_PANEL_SHORT_CMD;
 
+int doRainCountRead(int argc, char *argv[]);
+int doRainCountReset(int argc, char *argv[]);
 int doWindDirRead(int argc, char *argv[]);
 int doWindDirCal(int argc, char *argv[]);
 int doWindSpeedRead(int argc, char *argv[]);

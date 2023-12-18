@@ -5,7 +5,7 @@
 
 #define PROGRAM_NAME "srtdl"
 #define CARD_NAME "strdl"
-#define VERSION "1.0.0"
+#define VERSION "1.0.1"
 #define SLAVE_OWN_ADDRESS_BASE 0x51
 
 #define MV_TO_V ((float)0.001)
