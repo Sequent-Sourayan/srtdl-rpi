@@ -9,6 +9,7 @@
 #include "rtc.h"
 #include "rtd.h"
 #include "wdt.h"
+#include "sensor.h"
 
 const CliCmdType *gCmdArray[] = {
 	&CMD_HELP,
@@ -49,5 +50,10 @@ const CliCmdType *gCmdArray[] = {
 	&CMD_WDT_CLR_RESET_COUNT,
 	&CMD_LED_READ,
 	&CMD_LED_WRITE,
+	&CMD_SENS_PRES_RD,
+	&CMD_SENS_TEMP_RD,
+	&CMD_SENS_DENS_RD,
+	&CMD_SENS_HUMID_RD,
+	&CMD_SENS_SEC_TEMP_RD,
 	0
 };

@@ -88,4 +88,19 @@ int doBoardInit(int id) {
 	return dev;
 }
 
+int doSensorInit(void) {
+	
+	int addr = SLAVE_SENSOR_ADDRESS ;
+	int dev = i2cSetup(addr);
+	if(dev < 0) {
+		return ERR;
+	}
+	uint8_t buf[1];
+	if(ERR == i2cMem8Read(dev, I2C_MEM_REVISION_MAJOR, buf , 1)) {
+		printf(SENSOR_NAME" not detected\n");
+		return ERR;
+	}
+	return dev;
+}
+
 // vi:fdm=marker

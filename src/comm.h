@@ -41,6 +41,7 @@ int i2cSetup(int addr);
 int i2cMem8Read(int dev, int add, uint8_t* buf, int size);
 int i2cMem8Write(int dev, int add, uint8_t* buf, int size);
 int doBoardInit(int stack);
+int doSensorInit(void);
 
 #endif /* COMM_H */
 
